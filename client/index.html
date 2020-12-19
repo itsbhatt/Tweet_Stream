@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Real Time Tweets</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+    <div class="row" id="tweetsContainer">
+
+    </div>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
+        integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
+        crossorigin="anonymous"></script>
+
+    <script>
+        const socket = io();
+        socket.on('connect', () => {
+            console.log('Connected to server ...');
+        });
+
+        function CreateTweetCard(tweet) {
+            console.log(tweet)
+            const tweetEl = document.createElement('div');
+            tweetEl.className = "col s12 m6"
+            tweetEl.innerHTML = `
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">${tweet.includes.users[0].name}</span>
+                    <p>${tweet.data.text}</p>
+                </div>
+                <div class="card-action">
+                    <a href="#">This is a link</a>
+                    <a href="#">This is a link</a>
+                </div>
+            </div>
+        `
+
+            return tweetEl;
+        }
+
+
+        const tweetsContainer = document.querySelector('#tweetsContainer');
+
+
+        socket.on('tweet', (tweet) => {
+            tweetsContainer.appendChild(CreateTweetCard(tweet))
+        })
+
+
+
+
+        tweetsContainer.appendChild()
+    </script>
+</body>
+
+</html>
